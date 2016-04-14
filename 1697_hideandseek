@@ -5,13 +5,14 @@
 using namespace std;
 
 //using BFS
+//미해결
 
 int N, K;
 int check[100001] = {-1, };
 queue<int> q;
 int dir[3] = {1, -1, 0};
 
-void bfs(int x){
+int bfs(int x){
     int cur = 0;
     int next = 0;
     q.push(x);
@@ -25,7 +26,14 @@ void bfs(int x){
          break;
          */
         for(int i = 0; i < 3 ; i++){
-            next = (dir[i] == 0)? cur*2:cur+ dir[i];
+            //next = (dir[i] == 0)? cur*2:cur+ dir[i];
+            
+            if(dir[i] == 0){
+                next = cur * 2;
+            }else{
+                next = cur + dir[i];
+            }
+            
             /*
             if(cur == 100000){
                 if(dir[i] != -1 )
@@ -57,7 +65,7 @@ void bfs(int x){
              */
         }
     }
-    
+    return check[K];
 }
 
 int main(void){
@@ -65,9 +73,9 @@ int main(void){
     memset(check, -1, 100001);
     
     scanf("%d %d", &N, &K);
-    bfs(N);
+    printf("%d\n",bfs(N));
     
-    printf("%d\n", check[K]);
+    //printf("%d\n", check[K]);
     
     return 0;
 }
