@@ -9,67 +9,65 @@ using namespace std;
 int N, K;
 int check[100001] = {-1, };
 queue<int> q;
+int dir[3] = {1, -1, 0};
 
 void bfs(int x){
-	int cur = 0;
-	int next = 0;
-	q.push(x);
-	check[x] = 0;
-
-	while(!q.empty()){
-		cur = q.front(); q.pop();
-
-		/*
-		if(cur == K) //동생 위치면
-			break;
-		*/
-		next = cur + 1;
-		if(next  > 100000)
-			continue;
-		if(check[next] == -1){
-			check[next] = check[cur] + 1;
-			q.push(next);
-		}else if(check[next] > check[cur] + 1){
-			check[next] = check[cur] + 1;
-		}
-		if(next == K)
-			break;
-
-		next = cur - 1;
-		if(next < 0)
-			continue;
-		if(check[next] == -1){
-			check[next] = check[cur] + 1;
-			q.push(next);
-		}else if(check[next] > check[cur] + 1){
-			check[next] = check[cur] + 1;
-		}
-		if(next == K)
-			break;
-		
-		next = cur * 2;
-		if(next > 100000)
-			continue;
-		if(check[next] == -1){
-			check[next] = check[cur] + 1;
-			q.push(next);
-		}else if(check[next] > check[cur] + 1){
-			check[next] = check[cur] + 1;
-		}
-		if(next == K)
-			break;
-	}
-
+    int cur = 0;
+    int next = 0;
+    q.push(x);
+    check[x] = 0;
+    
+    while(!q.empty()){
+        cur = q.front(); q.pop();
+        
+        /*
+         if(cur == K) //동생 위치면
+         break;
+         */
+        for(int i = 0; i < 3 ; i++){
+            next = (dir[i] == 0)? cur*2:cur+ dir[i];
+            /*
+            if(cur == 100000){
+                if(dir[i] != -1 )
+                    continue;
+            }else if(cur == 1 ){
+                if(dir[i] == -1)
+                    continue;
+            }
+             */
+            if(next > 100000 || next < 1){
+                continue;
+            }
+            if(check[next] == -1 || (check[next] != -1 && (check[next] > check[cur] + 1))){
+                q.push(next);
+                check[next] = check[cur] + 1;
+            }
+            /*
+            if(check[next] == -1){
+                check[next] = check[cur] + 1;
+                q.push(next);
+            }else if(check[next] > check[cur] + 1){
+                check[next] = check[cur] + 1;
+                q.push(next);
+            }
+            */
+            /*
+            if(next == K)
+                break;
+             */
+        }
+    }
+    
 }
 
 int main(void){
-	N = K = 0;
-	memset(check, -1, 100001);
-
-	scanf("%d %d", &N, &K);
-	bfs(N);
-	
-	printf("%d\n", check[K]);
-	
-	return 0;
+    N = K = 0;
+    memset(check, -1, 100001);
+    
+    scanf("%d %d", &N, &K);
+    bfs(N);
+    
+    printf("%d\n", check[K]);
+    
+    return 0;
 }
