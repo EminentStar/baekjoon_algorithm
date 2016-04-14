@@ -22,10 +22,12 @@ void bfs(int r, int c){
 	qR.push(r);
 	qC.push(c);
 
+
 	while(!qR.empty()){
 		curR = qR.front(); qR.pop();
 		curC = qC.front(); qC.pop();
-		hCnt++;
+		check[curR][curC] = 1;
+		//hCnt++;
 
 		for(int i = 0; i < 4 ; i++){
 			int nextR = curR + dirR[i];
@@ -36,6 +38,7 @@ void bfs(int r, int c){
 				qR.push(nextR);
 				qC.push(nextC);
 				check[nextR][nextC] = 1;
+				hCnt++;
 			}
 		}
 	}
@@ -59,8 +62,8 @@ int main(void){
 	}
 
 	//bubble sort
-	for(int i = 1; i <= N; i++){
-		for(int k = 1 ; k <= N ; k++){
+	for(int i = 1; i <= sCnt; i++){
+		for(int k = 1 ; k <= sCnt ; k++){
 			if(set[k] > set[k+1]){
 				int temp = set[k];
 				set[k] = set[k+1];
@@ -69,6 +72,7 @@ int main(void){
 		}
 	}
 
+	printf("%d\n", sCnt);
 	for(int i = 1; i <= sCnt ; i++){
 		printf("%d\n", set[i]);
 	}
